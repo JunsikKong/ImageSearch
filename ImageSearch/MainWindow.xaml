@@ -4,12 +4,36 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 Title="MainWindow"
+                 Title="Image Search"
                  Width="800"
-                 Height="450"
+                 Height="400"
                  WindowStartupLocation="CenterScreen"
-                 mc:Ignorable="d">
+                 mc:Ignorable="d"
+                 
+                 TitleCharacterCasing="Normal"
+                 ResizeMode="CanMinimize"
+                 
+                 >
     <Grid>
-        <!--  Your content  -->
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Margin="5,5,25,5">
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,20">
+                    <TextBlock Text="Origin Image" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                    <Button Content="LOAD" Name="btnOriginImgLoad" Margin="5,5,5,5"/>
+                </WrapPanel>
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="1">
+                    <Image Name="imgOrigin" Height="200" Width="200" Margin="5,0"/>
+                </Border>
+            </StackPanel>
+            <StackPanel Margin="25,5,5,5">
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,20">
+                    <TextBlock Text="Find Image" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                    <Button Content="LOAD" Name="btnFindImgLoad" Margin="5,5,5,5"/>
+                </WrapPanel>
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="1">
+                    <Image Name="imgFind" Height="200" Width="200" Margin="5,0"/>
+                </Border>
+            </StackPanel>
+        </WrapPanel>
     </Grid>
 </mah:MetroWindow>
