@@ -5,8 +5,8 @@
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  Title="Image Search"
-                 Width="1100"
-                 Height="900"
+                 Width="1200"
+                 Height="1200"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d"
                  
@@ -25,7 +25,7 @@
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="1">
                         <Image Name="imgOrigin" Height="500" Width="500" Margin="5,0"/>
                     </Border>
-                    <TextBlock Name="tbxOriginPath" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" Width="200"/>
+                    <TextBlock Name="tbxOriginPath" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" Width="500"/>
                 </StackPanel>
                 <StackPanel Margin="15,5,5,5">
                     <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,20">
@@ -35,17 +35,21 @@
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="1">
                         <Image Name="imgFind" Height="500" Width="500" Margin="5,0"/>
                     </Border>
-                    <TextBlock Name="tbxFindPath" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" Width="200"/>
+                    <TextBlock Name="tbxFindPath" Margin="5,5,5,5" TextWrapping="WrapWithOverflow" Width="500"/>
                 </StackPanel>
             </WrapPanel>
             <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,15">
                 <TextBlock Text="정확도" FontSize="15" Margin="5,0,5,0" VerticalAlignment="center"/>
                 <mah:NumericUpDown Name="numHit" Maximum="100" Minimum="0" Value="90.5" Interval="0.1" StringFormat="#.0"/>
                 <TextBlock Text="%" FontSize="15" Margin="5,0,30,0" VerticalAlignment="center"/>
+                <CheckBox Name ="cbxGray" Content="BGR2GRAY"/>
                 <Button Content="검색하기" Name="btnSearch" Margin="5,5,5,5" Click="btnSearch_Click"/>
             </WrapPanel>
             <WrapPanel VerticalAlignment="Center" Margin="5,5,5,15">
-                <TextBlock Name="tbxOutput" Text="OUTPUT"/>
+                <TextBox Name="tbxOutput" Text="OUTPUT" VerticalScrollBarVisibility="Visible" MaxHeight="300"/>
+            </WrapPanel>
+            <WrapPanel VerticalAlignment="Center" Margin="5,5,5,5">
+                <TextBlock Name="tbxSpeed" Text="OUTPUT" FontSize="20" FontWeight="bold"/>
             </WrapPanel>
         </StackPanel>
     </Grid>

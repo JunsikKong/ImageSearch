@@ -81,32 +81,64 @@ namespace ImageSearch
 
         private string searchImg(Bitmap orgImg, Bitmap findImg)
         {
+            /* TemplateMatchModes.SqDiff = 0
+             * TemplateMatchModes.SqDiffNormed = 1
+             * TemplateMatchModes.CCorr = 2
+             * TemplateMatchModes.CCorrNormed = 3
+             * TemplateMatchModes.CCoeff = 4
+             * TemplateMatchModes.CCoeffNormed = 5
+             */
+
             string result = "";
 
             if (bmpOrigin != null && bmpFind != null)
             {
-                using (Mat OriginMat = OpenCvSharp.Extensions.BitmapConverter.ToMat(orgImg))
-                using (Mat FindMat = OpenCvSharp.Extensions.BitmapConverter.ToMat(findImg))
-                using (Mat res = OriginMat.MatchTemplate(FindMat, TemplateMatchModes.CCoeffNormed))
+                using (Mat originMat = OpenCvSharp.Extensions.BitmapConverter.ToMat(orgImg))
+                using (Mat findMat = OpenCvSharp.Extensions.BitmapConverter.ToMat(findImg))
+                using (Mat res = new Mat())
                 {
+                    if(cbxGray.IsChecked == true)
+                    {
+                        Mat grayorg = new Mat();
+                        Mat grayfind = new Mat();
+                        Cv2.CvtColor(originMat, grayorg, ColorConversionCodes.BGR2GRAY);
+                        Cv2.CvtColor(findMat, grayfind, ColorConversionCodes.BGR2GRAY);
+                        Cv2.MatchTemplate(grayorg, grayfind, res, TemplateMatchModes.CCoeffNormed);
+                    }
+                    else
+                    {
+                        Cv2.MatchTemplate(originMat, findMat, res, TemplateMatchModes.CCoeffNormed);
+                    }
+
                     double minval, maxval = 0;
                     OpenCvSharp.Point minloc, maxloc;
-                    Cv2.MinMaxLoc(res, out minval, out maxval, out minloc, out maxloc);
-                    result += "minval : " + minval + "\n";
-                    result += "maxval : " + maxval + "\n";
-                    result += "minloc.X : " + minloc.X + "\n";
-                    result += "minloc.Y : " + minloc.Y + "\n";
-                    result += "maxloc.X : " + maxloc.X + "\n";
-                    result += "maxloc.Y : " + maxloc.Y + "\n";
 
-                    if(maxval > numHit.Value * 0.01)
+                    Cv2.MinMaxLoc(res, out minval, out maxval, out minloc, out maxloc);
+
+                    if (maxval > numHit.Value * 0.01)
                     {
+                        result += "minval : " + minval + "\n";
+                        result += "maxval : " + maxval + "\n";
+                        result += "minloc.X : " + minloc.X + "\n";
+                        result += "minloc.Y : " + minloc.Y + "\n";
+                        result += "maxloc.X : " + maxloc.X + "\n";
+                        result += "maxloc.Y : " + maxloc.Y + "\n";
+                        result += "res.Rows : " + res.Rows + "\n";
+                        result += "res.Cols : " + res.Cols + "\n";
+                        result += "originMat.Rows : " + originMat.Rows + "\n";
+                        result += "originMat.Cols : " + originMat.Cols + "\n";
+                        result += "findMat.Rows : " + findMat.Rows + "\n";
+                        result += "findMat.Cols : " + findMat.Cols + "\n\n";
+                        Cv2.FloodFill(res, maxloc, new Scalar());
                         imgOrigin.Source = bmp2BitmapRectImage(bmpOrigin, maxloc.X, maxloc.Y, bmpFind.Width, bmpFind.Height);
                     }
                     else
                     {
+                        result += "NOT FOUND";
                         imgOrigin.Source = bmp2BitmapImage(bmpOrigin);
                     }
+
+                    return result;
                 }
             }
             else if (bmpOrigin == null && bmpFind == null)
@@ -136,16 +168,19 @@ namespace ImageSearch
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            string str = "";
-
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            str = searchImg(bmpOrigin, bmpFind);
+            tbxOutput.Text = searchImg(bmpOrigin, bmpFind);
 
             sw.Stop();
 
-            tbxOutput.Text = str + '\n' + sw.ElapsedMilliseconds.ToString() + " ms";
+            tbxSpeed.Text = sw.ElapsedMilliseconds.ToString() + " ms";
+        }
+
+        private void tbxOutput_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
         }
     }
 }
