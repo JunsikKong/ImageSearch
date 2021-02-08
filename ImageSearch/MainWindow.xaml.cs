@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -98,9 +99,13 @@ namespace ImageSearch
                     result += "maxloc.X : " + maxloc.X + "\n";
                     result += "maxloc.Y : " + maxloc.Y + "\n";
 
-                    if(maxval > HIT_VAL)
+                    if(maxval > numHit.Value * 0.01)
                     {
                         imgOrigin.Source = bmp2BitmapRectImage(bmpOrigin, maxloc.X, maxloc.Y, bmpFind.Width, bmpFind.Height);
+                    }
+                    else
+                    {
+                        imgOrigin.Source = bmp2BitmapImage(bmpOrigin);
                     }
                 }
             }
@@ -131,7 +136,16 @@ namespace ImageSearch
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            tbxOutput.Text = searchImg(bmpOrigin, bmpFind);
+            string str = "";
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            str = searchImg(bmpOrigin, bmpFind);
+
+            sw.Stop();
+
+            tbxOutput.Text = str + '\n' + sw.ElapsedMilliseconds.ToString() + " ms";
         }
     }
 }
