@@ -97,7 +97,17 @@ namespace ImageSearch
                 using (Mat findMat = OpenCvSharp.Extensions.BitmapConverter.ToMat(findImg))
                 using (Mat res = new Mat())
                 {
-                    if(cbxGray.IsChecked == true)
+                    double resizeval = (double)numResize.Value * 0.01;
+
+                    if (cbxResize.IsChecked == true)
+                    {
+                        Mat resizeorg = originMat;
+                        Mat resizefind = findMat;
+                        Cv2.Resize(originMat, resizeorg, new OpenCvSharp.Size(0, 0), resizeval, resizeval);
+                        Cv2.Resize(findMat, resizefind, new OpenCvSharp.Size(0, 0), resizeval, resizeval);
+                    }
+
+                    if (cbxGray.IsChecked == true)
                     {
                         Mat grayorg = new Mat();
                         Mat grayfind = new Mat();
@@ -109,6 +119,8 @@ namespace ImageSearch
                     {
                         Cv2.MatchTemplate(originMat, findMat, res, TemplateMatchModes.CCoeffNormed);
                     }
+
+                    
 
                     double minval, maxval = 0;
                     OpenCvSharp.Point minloc, maxloc;
@@ -130,7 +142,16 @@ namespace ImageSearch
                         result += "findMat.Rows : " + findMat.Rows + "\n";
                         result += "findMat.Cols : " + findMat.Cols + "\n\n";
                         Cv2.FloodFill(res, maxloc, new Scalar());
-                        imgOrigin.Source = bmp2BitmapRectImage(bmpOrigin, maxloc.X, maxloc.Y, bmpFind.Width, bmpFind.Height);
+
+                        if(cbxResize.IsChecked == true)
+                        {
+                            imgOrigin.Source = bmp2BitmapRectImage(bmpOrigin,(int)(maxloc.X / resizeval), (int)(maxloc.Y / resizeval), bmpFind.Width, bmpFind.Height);
+                        }
+                        else
+                        {
+                            imgOrigin.Source = bmp2BitmapRectImage(bmpOrigin, maxloc.X, maxloc.Y, bmpFind.Width, bmpFind.Height);
+                        }
+                        
                     }
                     else
                     {

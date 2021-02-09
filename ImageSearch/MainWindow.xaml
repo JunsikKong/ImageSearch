@@ -42,7 +42,9 @@
                 <TextBlock Text="정확도" FontSize="15" Margin="5,0,5,0" VerticalAlignment="center"/>
                 <mah:NumericUpDown Name="numHit" Maximum="100" Minimum="0" Value="90.5" Interval="0.1" StringFormat="#.0"/>
                 <TextBlock Text="%" FontSize="15" Margin="5,0,30,0" VerticalAlignment="center"/>
-                <CheckBox Name ="cbxGray" Content="BGR2GRAY"/>
+                <CheckBox Name ="cbxGray" Content="BGR2GRAY" Margin="5,0"/>
+                <CheckBox Name ="cbxResize" Content="RESIZE" Margin="5,0"/>
+                <mah:NumericUpDown Name="numResize" Maximum="99" Minimum="1" Value="50" Interval="1" StringFormat="0"/>
                 <Button Content="검색하기" Name="btnSearch" Margin="5,5,5,5" Click="btnSearch_Click"/>
             </WrapPanel>
             <WrapPanel VerticalAlignment="Center" Margin="5,5,5,15">
