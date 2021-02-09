@@ -1,8 +1,9 @@
 # ImageSearch
 
-* 테스트..
+* 작동영상
 
-테스트하고 있어요
-
+2021 02 07
 <img src="/img/img1.gif" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+
+2021 02 09
 <img src="/img/img2.gif" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
